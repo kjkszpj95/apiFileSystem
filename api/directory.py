@@ -1,4 +1,13 @@
-@app.post("/dircreate")
+import os
+
+from fastapi import APIRouter
+
+from models.models import DirectCreate
+
+router = APIRouter()
+
+
+@router.post("/dircreate")
 async def filestor(request: DirectCreate):
     paf = request.paf
     folder_name = request.folder_name
@@ -15,7 +24,8 @@ async def filestor(request: DirectCreate):
         print(f"Папка {folder_path} уже существует.")
         return "Папка уже существует"
 
-@app.get("/")
+
+@router.get("/")
 async def index(paf=None):
     if paf:
         folder_path = os.path.join(r"C:\Users\1\PycharmProjects\FileStorage\filestor", paf)
@@ -26,8 +36,8 @@ async def index(paf=None):
     return file_system
 
 
-@app.post("/dirupdate")
-async def dirupdate(old_name:str, new_name:str , paf=None):
+@router.post("/dirupdate")
+async def dirupdate(old_name: str, new_name: str, paf=None):
     if paf:
         folder_path = os.path.join(r"C:\Users\1\PycharmProjects\FileStorage\filestor", paf)
     else:
